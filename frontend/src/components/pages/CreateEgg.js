@@ -38,14 +38,36 @@ const CreateEgg = () => {
     //streaming service dropdown menu
     const[service, setService] = useState('spotify')
 
+    //room title 
+    const[title, setTitle] = useState('None')
 
     //event handlers
+    const handleNewTitle = (event) =>{
+        setTitle(event.target.title)
+    }
     const handleGuestCanPause = (event)=>{
         setChecked(event.target.checked)
     }
     const handleStreamingService = (event)=> {
         setService(event.target.value)
     }
+
+    const handleRoomButtonPressed=() =>{
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name_of_room: {title},
+              guest_can_pause: {checked},
+              streaming_service: {service}, 
+            }),
+          };
+          fetch("/api/create-room", requestOptions)
+            .then((response) => response.json())
+            .then((data) => console.log(data));
+      }
+    
+  
 
     return (
         <div className='hero-container'>
@@ -60,11 +82,17 @@ const CreateEgg = () => {
                     <ul className='options'>
                         <form className = {classes.root} noValidate autoComplete='off'>
                             <li className="roomName">Give your room a name so people would know what room they are joining 
-                                <TextField id="standard-basic" label="Strange monkey &#58664;" />   
+                                <TextField 
+                                    title = {title}
+                                    onChange={handleNewTitle}
+                                    id="standard-basic" 
+                                    label="Strange monkey
+                                    &#58664;" />   
                             </li>
                         </form>
                         <li className="createRoomList">Guest Can have control to play/pause songs?
                             <Checkbox
+                            style = {{color: 'white'}}
                             checked = {checked}
                             onChange = {handleGuestCanPause}
                             color="primary"
@@ -76,6 +104,7 @@ const CreateEgg = () => {
                         <FormControl className={classes.formControl}>
                             <InputLabel id="demo-simple-select-label">on {service}</InputLabel>
                             <Select
+                            style = {{color: 'white'}}
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={service}
@@ -89,7 +118,7 @@ const CreateEgg = () => {
                       </FormControl>
                         </li>
                     </ul>
-                    <div className="btn btn-one">
+                    <div className="btn btn-one" onClick={handleRoomButtonPressed}>
                         <span>Create an Egg</span>
                     </div>
                 </div>

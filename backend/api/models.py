@@ -17,8 +17,10 @@ def generate_unique_code():
 
 
 class Room(models.Model):
-    name_of_room = models.CharField(max_length=12, default=True, unique=True)
+    name_of_room = models.CharField(max_length=50, default='')
+    streaming_service = models.CharField(max_length= 10, default='spotify')
     code = models.CharField(max_length=8, default=generate_unique_code, unique=True)
     host = models.CharField(max_length=50, unique=True)
     guest_can_pause = models.BooleanField(null=False, default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    

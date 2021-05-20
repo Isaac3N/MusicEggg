@@ -26,19 +26,19 @@ class CreateRoomView(APIView):
         if serializer.is_valid():
             guest_can_pause = serializer.data.get('guest_can_pause')
             name_of_room = serializer.data.get('name_of_room')
-            created_at = serializer.data.get('created_at')
+            streaming_service = serializer.data.get('streaming_service')
             host = self.request.session.session_key
             queryset = Room.objects.filter(host=host)
             if queryset.exists(): #to check if teh host has any other rooms 
                 room = queryset[0]
                 room.name_of_room = name_of_room 
                 room.guest_can_pause = guest_can_pause
-                room.created_at = created_at
-                room.save(update_fields=['guest_can_pause', 'name_of_room', 'created_at'])
+                room.streaming_service = streaming_service
+                room.save(update_fields=['guest_can_pause', 'name_of_room', 'created_at', 'streaming_service'])
                 return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
             else:
                 room = Room(host=host, guest_can_pause=guest_can_pause,
-                            name_of_room=name_of_room, created_at=created_at)
+                            name_of_room=name_of_room,  streaming_service=streaming_service)
                 room.save()
                 return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED) #to return a json formatted data 
 
