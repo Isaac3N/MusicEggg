@@ -18,16 +18,17 @@ class CreateRoomView(APIView):
     serializer_class = CreateRoomSerializer
 
     def post(self, request, format=None):
-        if not self.request.session.exists(self.request.session.session_key):
+        #sessions is a temporary connetcion between two computers 
+        if not self.request.session.exists(self.request.session.session_key): # to check whether the session exist
             self.request.session.create()
 
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data) # if the session exist it gets the data
         if serializer.is_valid():
             guest_can_pause = serializer.data.get('guest_can_pause')
             name_of_room = serializer.data.get('name_of_room')
             host = self.request.session.session_key
             queryset = Room.objects.filter(host=host)
-            if queryset.exists():
+            if queryset.exists(): #to check if teh host has any other rooms 
                 room = queryset[0]
                 room.name_of_room = name_of_room 
                 room.guest_can_pause = guest_can_pause

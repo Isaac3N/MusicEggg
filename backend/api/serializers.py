@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Room
 
+#serializers allows complex data such as querysets and model instances to be converted to native python datatypes t
+#that can the be easily be rendered into json data 
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
