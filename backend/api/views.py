@@ -38,6 +38,6 @@ class CreateRoomView(APIView):
                 room = Room(host=host, guest_can_pause=guest_can_pause,
                             name_of_room=name_of_room)
                 room.save()
-                return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
+                return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED) #to return a json formatted data 
 
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
