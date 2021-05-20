@@ -58,15 +58,16 @@ const CreateEgg = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              name_of_room: {title},
-              guest_can_pause: {checked},
-              streaming_service: {service}, 
+            name_of_room: {title},
+            guest_can_pause: {checked},
+            streaming_service: {service}, 
             }),
           };
           fetch("http://localhost:8000/api/create-room", requestOptions)
             .then((response) => response.json())
             .then((data) => console.log(data));
       }
+     
     
   
 
