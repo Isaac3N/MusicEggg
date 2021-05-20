@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './CreateEgg.css'
 import { Link } from 'react-router-dom';
 import Contact from '../Contact.js'
@@ -6,9 +6,11 @@ import '../../components/button.css'
 import RadioButton from '../../components/RadioButton'
 import '../../components/toggle.scss'
 import TextField from "@material-ui/core/TextField";
+import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles';
 
 const CreateEgg = () => {
+    //text field with material ui
     const useStyles = makeStyles((theme) => ({
         root: {
           '& > *': {
@@ -17,7 +19,14 @@ const CreateEgg = () => {
           },
         },
       }));
-      const classes = useStyles()
+    const classes = useStyles()
+
+    //checkbox with material ui
+    const [checked, setChecked] = useState(false)
+    const handleGuestCanPause = (event)=>{
+        setChecked(event.target.checked)
+    }
+
     return (
         <div className='hero-container'>
             <Link to=''>
@@ -35,16 +44,19 @@ const CreateEgg = () => {
                             </li>
                         </form>
                         <li className="createRoomList">Guest Can have control to play/pause songs?
-                            <label class="switch-wrap">
-                            <input type="checkbox" />
-                            <div class="switch"></div>
-                            </label> 
+                            <Checkbox
+                            checked = {checked}
+                            onChange = {handleGuestCanPause}
+                            color="primary"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+            
                         </li>
                         <li className="createRoomList">Choose a Streaming service:
                             
                         </li>
                     </ul>
-                    <div class="btn btn-one">
+                    <div className="btn btn-one">
                         <span>Create an Egg</span>
                     </div>
                 </div>
