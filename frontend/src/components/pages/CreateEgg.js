@@ -18,6 +18,7 @@ const CreateEgg = () => {
                     <p>Create a room to share your music with friends.</p> 
                 
                     <ul className='options'>
+                        <li className="roomName">Give your room a name so people would know what room they are joining </li>
                         <li className="createRoomList">Guest Can have control to play/pause songs?
                             <label class="switch-wrap">
                             <input type="checkbox" />
