@@ -18,13 +18,13 @@ const CreateEgg = () => {
                     <p>Create a room to share your music with friends.</p> 
                 
                     <ul className='options'>
-                        <li>Guest Can have control to play/pause songs?
+                        <li className="createRoomList">Guest Can have control to play/pause songs?
                             <label class="switch-wrap">
                             <input type="checkbox" />
                             <div class="switch"></div>
                             </label> 
                         </li>
-                        <li>Choose a Streaming service:
+                        <li className="createRoomList">Choose a Streaming service:
                             <ul>
                                <RadioButton
                                     id='1'
