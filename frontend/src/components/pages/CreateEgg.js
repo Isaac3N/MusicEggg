@@ -12,6 +12,7 @@ import { FormControl } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import axios from 'axios'
 
 const CreateEgg = () => {
     //material ui styling 
@@ -39,11 +40,11 @@ const CreateEgg = () => {
     const[service, setService] = useState('spotify')
 
     //room title 
-    const[title, setTitle] = useState('None')
+    const[title, setTitle] = useState('Strange Monkey')
 
     //event handlers
     const handleNewTitle = (event) =>{
-        setTitle(event.target.title)
+        setTitle(event.target.value)
     }
     const handleGuestCanPause = (event)=>{
         setChecked(event.target.checked)
@@ -62,7 +63,7 @@ const CreateEgg = () => {
               streaming_service: {service}, 
             }),
           };
-          fetch("/api/create-room", requestOptions)
+          fetch("http://localhost:8000/api/create-room", requestOptions)
             .then((response) => response.json())
             .then((data) => console.log(data));
       }
@@ -83,7 +84,7 @@ const CreateEgg = () => {
                         <form className = {classes.root} noValidate autoComplete='off'>
                             <li className="roomName">Give your room a name so people would know what room they are joining 
                                 <TextField 
-                                    title = {title}
+                                    value = {title}
                                     onChange={handleNewTitle}
                                     id="standard-basic" 
                                     label="Strange monkey

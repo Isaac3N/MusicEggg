@@ -15,4 +15,4 @@ class RoomSerializer(serializers.ModelSerializer):
 class CreateRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ('guest_can_pause', 'name_of_room', "name_of_room",  'streaming_service')
+        fields = ( 'name_of_room','guest_can_pause', 'streaming_service')
