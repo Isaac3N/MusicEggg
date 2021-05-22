@@ -22,7 +22,7 @@ const HeroSection = () => {
                     <div className='heroSectionCenter'>
                         <h2>Hey, This is Music Egg. Lets get streaming!</h2>
                         <Link to = ''>
-                            <div class="btn btn-one">
+                            <div className="btn btn-one">
                                 <span>Getting Started</span>
                             </div>
                         </Link>
@@ -40,7 +40,7 @@ const HeroSection = () => {
                         songs and beats to share with friends and people of all walks of 
                         life by creating your own egg </h2>
                         <Link to ='/CreateEgg'>
-                            <div class="btn btn-one">
+                            <div className="btn btn-one">
                                     <span>Create an Egg</span>
                             </div>
                         </Link>
@@ -56,7 +56,7 @@ const HeroSection = () => {
                     <div className="heroSectionCenter">
                         <h2>Discover songs and playlists that get your body moving. By joining different eggs</h2>
                         <Link to ='/JoinEgg'>
-                            <div class="btn btn-one">
+                            <div className="btn btn-one">
                                 <span>Join an Egg</span>
                             </div>
                         </Link>

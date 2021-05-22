@@ -42,6 +42,7 @@ const CreateEgg = () => {
     //room title 
     const[title, setTitle] = useState('Strange Monkey')
 
+
     //event handlers
     const handleNewTitle = (event) =>{
         setTitle(event.target.value)
@@ -52,6 +53,7 @@ const CreateEgg = () => {
     const handleStreamingService = (event)=> {
         setService(event.target.value)
     }
+
 
     const handleRoomButtonPressed=() =>{
         const requestOptions = {
@@ -67,7 +69,9 @@ const CreateEgg = () => {
             .then((response) => response.json())
             .then((data) => console.log(data));
       }
-     
+    
+
+    
     
   
 
