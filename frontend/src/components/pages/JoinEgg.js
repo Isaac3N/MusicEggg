@@ -3,13 +3,31 @@ import './JoinEgg.css'
 import { Link } from 'react-router-dom';
 import TextField from "@material-ui/core/TextField";
 
-const JoinEgg = () => {
+const JoinEgg = ({history}) => {
     const [code, setCode] = useState()
     const handleCodeInput = (event) =>{
         setCode(event.target.value)
     }
+    const [error, setError] = useState('')
     const handleButttonPressed = ()=> {
-        console.log(code) 
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                code: code,
+            }),
+          };
+          fetch("http://localhost:8000/api/join-room", requestOptions)
+            .then((response) => {
+                if(response.ok){
+                    history.push(`/egg/${code}`)
+                }else {
+                    setError({error: 'Room not found'})
+                }
+            }).catch ((error)=>{
+                console.log(error)
+            })
+    
     }
     const handleSubmit=(event)=>{
         event.preventDefault()

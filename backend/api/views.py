@@ -30,6 +30,24 @@ class GetRoom(APIView):
 
         return Response({'Bad Request': 'Code paramater not found in request'}, status=status.HTTP_400_BAD_REQUEST)
 
+class JoinRoom(APIView):
+    lookup_url_kwarg = 'code'
+
+    def post(self, request, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        code = request.data.get(self.lookup_url_kwarg)
+        if code != None:
+            room_result = Room.objects.filter(code=code)
+            if len(room_result) > 0:
+                room = room_result[0]
+                self.request.session['room_code'] = code
+                return Response({'message': 'Egg Joined!'}, status=status.HTTP_200_OK)
+
+            return Response({'Bad Request': 'Invalid Egg Code'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'Bad Request': 'Invalid post data, could not find a code key'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateRoomView(APIView):
@@ -53,11 +71,13 @@ class CreateRoomView(APIView):
                 room.guest_can_pause = guest_can_pause
                 room.streaming_service = streaming_service
                 room.save(update_fields=['guest_can_pause', 'name_of_room', 'created_at', 'streaming_service'])
+                self.request.session['room_code'] = room.code
                 return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
             else:
                 room = Room(host=host, guest_can_pause=guest_can_pause,
                             name_of_room=name_of_room,  streaming_service=streaming_service)
                 room.save()
+                self.request.session['room_code'] = room.code
                 return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED) #to return a json formatted data 
 
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
