@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import axios from 'axios'
 
-const CreateEgg = () => {
+const CreateEgg = ({match, history, location}) => {
     //material ui styling 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -67,7 +67,7 @@ const CreateEgg = () => {
           };
           fetch("http://localhost:8000/api/create-room", requestOptions)
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => history.push('/egg/' + data.code))
             
       }
     

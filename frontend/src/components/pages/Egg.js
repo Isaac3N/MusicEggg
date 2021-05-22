@@ -4,7 +4,7 @@ const Egg = ({match}) => {
     const[title, setTitle] = useState('Strange Monkey')
     const [checked, setChecked] = useState(false)
     const[service, setService] = useState('spotify')
-    const [ishost, setIshost] = useState(false)
+    const [ishost, setIshost] = useState(true)
     const eggCode = match.params.eggCode // match stores the information of how we got into the component using router
     
     const getEggDetails=()=> {
