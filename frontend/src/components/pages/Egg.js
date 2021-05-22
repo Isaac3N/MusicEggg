@@ -20,6 +20,7 @@ const Egg = ({match}) => {
             setIshost(
                 data.is_host,
             )
+            console.log(data.is_host)
             setService(
                 data.streaming_service, 
             )
