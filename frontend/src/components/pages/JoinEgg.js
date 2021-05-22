@@ -11,22 +11,26 @@ const JoinEgg = () => {
     const handleButttonPressed = ()=> {
         console.log(code) 
     }
+    const handleSubmit=(event)=>{
+        event.preventDefault()
+    } // to change the default from a contolled input to an uncontrolled one 
     return (
         <div className='hero-container'>
             <Link to=''>
                 <h3 className ='top-left'>Music Egg</h3>
             </Link>
-            <div class = 'container'>
+            <div className = 'container'>
                 <div className ='joinRoom'>
                     <h4>Join an Egg </h4>
-                    <TextField id="outlined-search"
+                    <TextField id="outlined-name"
                         value = {code}
+                        onSubmit={handleSubmit}
                         onChange = {handleCodeInput}
                         placeholder = 'Enter an Egg Code'
                         label="Egg Code" 
                         type="search" 
-                        variant="outlined" />
-                    <div className="btn btn-one" onClick={handleButttonPressed } >
+                        />
+                    <div className="btn btn-one"  onClick={handleButttonPressed} >
                         <span>Join Egg</span>
                     </div>
                 </div>
