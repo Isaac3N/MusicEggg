@@ -42,6 +42,8 @@ const CreateEgg = ({match, history, location}) => {
     //room title 
     const[title, setTitle] = useState('Strange Monkey')
 
+    //guest can skip
+    const[skip, setSkip] = useState(2)
 
     //event handlers
     const handleNewTitle = (event) =>{
@@ -53,6 +55,9 @@ const CreateEgg = ({match, history, location}) => {
     const handleStreamingService = (event)=> {
         setService(event.target.value)
     }
+    const handleVotesChanged = (event)=>{
+        setSkip(event.target.value)
+    }
 
 
     const handleRoomButtonPressed=() =>{
@@ -62,6 +67,7 @@ const CreateEgg = ({match, history, location}) => {
             body: JSON.stringify({
             name_of_room: title,
             guest_can_pause: checked,
+            votes_to_skip: skip,
             streaming_service: service, 
             }),
           };
@@ -101,6 +107,19 @@ const CreateEgg = ({match, history, location}) => {
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
             
+                        </li>
+                        <li className='createRoomList'>Votes to Skip a song 
+                            <TextField
+                            style = {{color: 'white'}}
+                            required={true}
+                            type="number"
+                            onChange={handleVotesChanged}
+                            value={skip}
+                            inputProps={{
+                            min: 1,
+                            style: { textAlign: "center", color: 'white' },
+                            }}
+                        />
                         </li>
                         <li className="createRoomList">Choose a Streaming service:
                         <FormControl className={classes.formControl}>
