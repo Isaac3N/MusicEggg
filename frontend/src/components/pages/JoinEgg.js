@@ -17,12 +17,12 @@ const JoinEgg = ({history}) => {
                 code: code,
             }),
           };
-          fetch("http://localhost:8000/api/join-room", requestOptions)
+          fetch("/api/join-room", requestOptions)
             .then((response) => {
                 if(response.ok){
                     history.push(`/egg/${code}`)
                 }else {
-                    setError({error: 'Room not found'})
+                    setError('Egg not found')
                 }
             }).catch ((error)=>{
                 console.log(error)
@@ -46,6 +46,7 @@ const JoinEgg = ({history}) => {
                         onChange = {handleCodeInput}
                         placeholder = 'Enter an Egg Code'
                         label="Egg Code" 
+                        helperText={error}
                         type="search" 
                         />
                     <div className="btn btn-one"  onClick={handleButttonPressed} >

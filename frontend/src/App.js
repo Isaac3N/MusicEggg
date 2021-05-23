@@ -8,25 +8,26 @@ import JoinEgg from './components/pages/JoinEgg';
 import React, { useEffect, useState } from 'react';
 
 function App() {
-  const[code, setCode] = useState(null)
+  const[code, setCode] = useState()
   useEffect(()=>{
     async function fetchData(){
-      fetch('http://localhost:8000/api/user-in-room')
+      fetch('/api/user-in-room')
       .then((response)=> response.json())
-      .then((data)=>{
+      .then((data)=>
         setCode({
           code: data.code, 
         })
-      })
+      )
     }
     fetchData()
   }, [])
-  return (
+
+  return ( 
     <>
       <Router>
         <Switch>
           <Route path='/' exact component={Home} render={()=>{
-            return code ? (<Redirect to={`/egg/${code}`}/>) : (Home())
+            return code ? (<Redirect to={('/egg/'+ setCode)}/>) : (Home())
           }}/>
           <Route path='/CreateEgg' component={CreateEgg}/>
           <Route path='/JoinEgg' component={JoinEgg}/>

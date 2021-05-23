@@ -65,16 +65,11 @@ const CreateEgg = ({match, history, location}) => {
             streaming_service: service, 
             }),
           };
-          fetch("http://localhost:8000/api/create-room", requestOptions)
+          fetch("/api/create-room", requestOptions)
             .then((response) => response.json())
             .then((data) => history.push('/egg/' + data.code))
             
       }
-    
-
-    
-    
-  
 
     return (
         <div className='hero-container'>

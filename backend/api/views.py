@@ -5,7 +5,7 @@ from .models import Room
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
-
+from django.contrib.sessions.backends.db import SessionStore
 
 # Create your views here.
 
@@ -18,8 +18,9 @@ class RoomView(generics.ListAPIView):
 class GetRoom(APIView):
     serializer_class = RoomSerializer
     lookup_url_kwarg = 'code'
-
+    
     def get(self, request, format=None):
+        print(self.request.session.session_key)
         code = request.GET.get(self.lookup_url_kwarg)
         if code != None:
             room = Room.objects.filter(code=code)
@@ -27,7 +28,7 @@ class GetRoom(APIView):
                 data = RoomSerializer(room[0]).data
                 data['is_host'] = self.request.session.session_key == room[0].host
                 return Response(data, status=status.HTTP_200_OK)
-            return Response({'Bad Egg': 'Invalid Room Code.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'Room Not Found': 'Invalid Room Code.'}, status=status.HTTP_404_NOT_FOUND)
 
         return Response({'Bad Request': 'Code paramater not found in request'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -37,6 +38,8 @@ class JoinRoom(APIView):
     def post(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
+            print(self.request.session.session_key)
+          
 
         code = request.data.get(self.lookup_url_kwarg)
         if code != None:
@@ -65,6 +68,7 @@ class CreateRoomView(APIView):
             name_of_room = serializer.data.get('name_of_room')
             streaming_service = serializer.data.get('streaming_service')
             host = self.request.session.session_key
+            print(host)
             queryset = Room.objects.filter(host=host)
             if queryset.exists(): #to check if teh host has any other rooms 
                 room = queryset[0]
@@ -88,9 +92,9 @@ class UserInRoom(APIView):
     def get(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
-
+        print(self.request.session.session_key)
         data = {
             'code': self.request.session.get('room_code')
         }
-        return JsonResponse(data, status=status.HTTP_200_OK)
+        return JsonResponse(data,  status=status.HTTP_200_OK)
         #the jsonresponse takes a python dictionary then serialize then send it to the frontend 
