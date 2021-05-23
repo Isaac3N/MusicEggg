@@ -14,9 +14,9 @@ function App() {
       fetch('/api/user-in-room')
       .then((response)=> response.json())
       .then((data)=>
-        setCode({
-          code: data.code, 
-        })
+        setCode(
+          data.code, 
+        )
       )
     }
     fetchData()
@@ -26,8 +26,8 @@ function App() {
     <>
       <Router>
         <Switch>
-          <Route path='/' exact component={Home} render={()=>{
-            return code ? (<Redirect to={('/egg/'+ setCode)}/>) : (Home())
+          <Route exact path='/'  render={()=>{
+            return code ? (<Redirect to={('/egg/'+ code)}/>) : (Home())
           }}/>
           <Route path='/CreateEgg' component={CreateEgg}/>
           <Route path='/JoinEgg' component={JoinEgg}/>
