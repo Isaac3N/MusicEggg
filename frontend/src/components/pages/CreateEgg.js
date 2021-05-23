@@ -95,7 +95,10 @@ const CreateEgg = ({match, history, location}) => {
                                     onChange={handleNewTitle}
                                     id="standard-basic" 
                                     label="Strange monkey
-                                    &#58664;" />   
+                                    &#58664;" 
+                                    inputProps={{
+                                        style: { color: 'white' },
+                                        }} />   
                             </li>
                         </form>
                         <li className="createRoomList">Guest Can have control to play/pause songs?
