@@ -20,6 +20,7 @@ class AuthURL(APIView):
         }).prepare().url
 
         return Response({'url': url}, status=status.HTTP_200_OK)
+        
 
 
 def spotify_callback(request, format=None):
