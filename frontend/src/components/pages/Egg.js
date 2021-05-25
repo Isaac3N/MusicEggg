@@ -15,7 +15,6 @@ const Egg = (props) => {
         fetch("/api/get-room" + "?code=" + eggCode)
           .then((response) => {
             if (!response.ok) {
-             //leaveRoomCallback();
               props.history.push("/");
             }
             return response.json();
@@ -48,7 +47,6 @@ const Egg = (props) => {
         };
         fetch("/api/leave-room", requestOptions)
         .then((_response) => {
-          //props.leaveRoomCallback();
           props.history.push("/");
         });
       }
