@@ -18,8 +18,7 @@ class CreateRoomSerializer(serializers.ModelSerializer):
         fields = ( 'name_of_room','guest_can_pause', 'votes_to_skip', 'streaming_service')
 
 class UpdateRoomSerializer(serializers.ModelSerializer):
-    code = serializers.CharField(validators=[])
-
+    code = serializers.CharField(validators=[])#to override the unique field 
     class Meta:
         model = Room
         fields = ('name_of_room', 'guest_can_pause', 'votes_to_skip', 'code')
