@@ -100,3 +100,15 @@ class UserInRoom(APIView):
         }
         return JsonResponse(data,  status=status.HTTP_200_OK)
         #the jsonresponse takes a python dictionary then serialize then send it to the frontend 
+
+class LeaveRoom(APIView):
+    def post(self, request, format=None):
+        if 'room_code' in self.request.session:
+            self.request.session.pop('room_code')
+            host_id = self.request.session.session_key
+            room_results = Room.objects.filter(host=host_id)
+            if len(room_results) > 0:
+                room = room_results[0]
+                room.delete()
+
+        return Response({'Message': 'Success'}, status=status.HTTP_200_OK)

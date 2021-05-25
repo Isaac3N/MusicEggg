@@ -1,16 +1,25 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
-const Egg = ({match}) => {
+
+const Egg = (props) => {
     const[title, setTitle] = useState('Strange Monkey')
     const [checked, setChecked] = useState(false)
     const[service, setService] = useState('spotify')
     const [isHost, setIsHost] = useState(false)
     const[skip, setSkip] = useState(2)
-    const eggCode = match.params.eggCode // match stores the information of how we got into the component using router
+    const eggCode = props.match.params.eggCode // match stores the information of how we got into the component using router
     
     const getEggDetails=()=> {
         fetch("/api/get-room" + "?code=" + eggCode)
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+             //leaveRoomCallback();
+              props.history.push("/");
+            }
+            return response.json();
+          })
           .then((data) => {
             setTitle(
               data.name_of_room
@@ -31,6 +40,18 @@ const Egg = ({match}) => {
         
       }
       getEggDetails()
+      
+      const leaveButtonPressed=()=>{
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        };
+        fetch("/api/leave-room", requestOptions)
+        .then((_response) => {
+          //props.leaveRoomCallback();
+          props.history.push("/");
+        });
+      }
 
     return (
         <div>
@@ -40,6 +61,9 @@ const Egg = ({match}) => {
             <p>Votes Required to skip: {skip}</p>
             <p>Service used: {service}</p>
             <p>Host: {isHost.toString()}</p>
+            <Button variant="contained" color="secondary" to="/" component={Link} onClick={leaveButtonPressed}>
+                Leave Room 
+            </Button>
         </div>
     )
 }

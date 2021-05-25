@@ -24,7 +24,7 @@ const JoinEgg = ({history}) => {
                 }else {
                     setError('Egg not found')
                 }
-            }).catch ((error)=>{
+            }).catch((error)=>{
                 console.log(error)
             })
     

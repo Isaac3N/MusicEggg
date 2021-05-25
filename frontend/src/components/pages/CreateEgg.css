@@ -27,11 +27,18 @@
     transform: translate(-50%, -50%);
 }
 
-@media only screen and (max-width: 400px){
+@media only screen and (max-width: 500px){
     .createRoom{
-        height: 92%;
+        height: 90%;
         width: 90%;
     }
+    .createRoom > h3{
+        font-size: 24px;
+    }
+    .createRoom > p{
+        font-size: 10px;
+    }
+
 }
 
 p {

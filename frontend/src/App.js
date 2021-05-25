@@ -7,8 +7,8 @@ import Egg from './components/pages/Egg';
 import JoinEgg from './components/pages/JoinEgg';
 import React, { useEffect, useState } from 'react';
 
-function App() {
-  const[code, setCode] = useState()
+function App(props) {
+  const[code, setCode] = useState(null)
   useEffect(()=>{
     async function fetchData(){
       fetch('/api/user-in-room')
@@ -21,6 +21,9 @@ function App() {
     }
     fetchData()
   }, [])
+  const clearRoomCode=()=>{
+    setCode({code: null})
+  }
 
   return ( 
     <>
@@ -31,7 +34,12 @@ function App() {
           }}/>
           <Route path='/CreateEgg' component={CreateEgg}/>
           <Route path='/JoinEgg' component={JoinEgg}/>
-          <Route path='/egg/:eggCode' component={Egg}/>
+          <Route 
+            path='/egg/:eggCode'
+            render={(props)=>{
+              return <Egg {...props} leaveRoomCallback={clearRoomCode}/>
+            }} 
+            component={Egg}/>
         </Switch>
       </Router>
       
