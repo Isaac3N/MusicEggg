@@ -11,6 +11,7 @@ const Egg = (props) => {
     const[skip, setSkip] = useState(2)
     const eggCode = props.match.params.eggCode // match stores the information of how we got into the component using router
     const[code, setCode] = useState(null)
+    const[authenticated, setAuthenticated]= useState(false)
 
     const clearRoomCode=()=>{
       setCode({code: null})
@@ -41,11 +42,29 @@ const Egg = (props) => {
             setSkip(
                 data.votes_to_skip, 
             )
+            if(isHost){
+              authenticateSpotify()
+            }
           });
         
       }
       getEggDetails()
-      
+
+      const authenticateSpotify=()=> {
+        fetch("/spotify/is-authenticated")
+          .then((response) => response.json())
+          .then((data) => {
+            setAuthenticated({ spotifyAuthenticated: data.status });
+            console.log(data.status);
+            if (!data.status) {
+              fetch("/spotify/get-auth-url")
+                .then((response) => response.json())
+                .then((data) => {
+                  window.location.replace(data.url);
+                });
+            }
+          });
+      }
       const leaveButtonPressed=()=>{
         const requestOptions = {
           method: "POST",
